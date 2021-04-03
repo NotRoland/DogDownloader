@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-type Dog struct {
+type DogJSON struct {
 	Message string
 }
 
@@ -51,7 +51,7 @@ func getDogs(finished chan float64, iter int) {
 	}
 	bytes, _ := ioutil.ReadAll(resp.Body)
 
-	var decoded Dog
+	var decoded DogJSON
 	json.Unmarshal(bytes, &decoded)
 	/*if len(decoded) == 0 {
 		fmt.Println("API Error [IGNORING]")
@@ -67,7 +67,7 @@ func getDogs(finished chan float64, iter int) {
 	return
 }
 
-func checkFin(finished chan float64, fullFin chan int, iters float64) {
+func loopUntilDone(finished chan float64, fullFin chan int, iters float64) {
 	thrF := 0.0
 	for thrF < iters*2 {
 		thrF += <-finished
@@ -86,7 +86,7 @@ func main() {
 
 	os.Mkdir("Dogs", 0755)
 
-	go checkFin(finished, fullFin, iters)
+	go loopUntilDone(finished, fullFin, iters)
 
 	var smCheck float64
 	if iters<200 { smCheck = iters } else { smCheck = math.Ceil(iters/math.Ceil(iters/200)) }

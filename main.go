@@ -76,7 +76,7 @@ func checkFin(finished chan float64, fullFin chan int, iters float64) {
 }
 
 func main() {
-	fmt.Println("====\nDog Downloader\n====\nThis tool uses the dog.ceo API.\nDogs will be saved in [RUNPATH]/Dogs.\n")
+	fmt.Println("====\nDog Downloader\n====\nPress CTRL+C to interrupt.\nDogs will be saved in [RUNPATH]/Dogs.\n")
 	fmt.Print("Enter how many dogs you want: ")
 	var iters float64
 	fmt.Scanln(&iters)

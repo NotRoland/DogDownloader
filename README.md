@@ -7,4 +7,5 @@ You can use one of the executables from the Binaries folder. I've made a small C
 
 To compile it manually, download this repo and execute "go run main.go".
 #### Dependencies
-I use [grab](github.com/cavaliercoder/grab) for downloading files.
+- [grab](github.com/cavaliercoder/grab) for downloading files. 
+- [jsoniter](https://github.com/json-iterator/go) as a faster alternative to `encoding/json`.

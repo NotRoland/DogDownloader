@@ -6,3 +6,5 @@ It downloads dog pictures from the dog.ceo API asynchronously using goroutines. 
 You can use one of the executables from the Binaries folder. I've made a small CLI interface for this tool.
 
 To compile it manually, download this repo and execute "go run main.go".
+#### Dependencies
+I use [grab](github.com/cavaliercoder/grab) for downloading files.

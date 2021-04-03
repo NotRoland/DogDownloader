@@ -3,9 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
+	"github.com/cavaliercoder/grab"
 	"io/ioutil"
-	"math"
 	"net/http"
 	"os"
 	"strconv"
@@ -17,19 +16,10 @@ type DogJSON struct { Message string }
 var totalDownloaded int
 
 func downloadFile(url string, filepath string) float64{
-	resp, err := http.Get(url); defer resp.Body.Close()
-	if err != nil {
-		fmt.Println(err)
-		return 1
-	}
-	out, err := os.Create(filepath); defer out.Close()
-	if err != nil {
-		fmt.Println(err)
-		return 1
-	}
-	_, err = io.Copy(out, resp.Body)
-	totalDownloaded += 1
+	_, err := grab.Get(filepath, url)
+	if err != nil { return 1 }
 	fmt.Println("Downloaded "+filepath)
+	totalDownloaded += 1
 	return 1
 }
 
@@ -71,18 +61,12 @@ func main() {
 	os.Mkdir("Dogs", 0755)
 	go loopUntilDone(finished, fullFin, iters)
 
-	var smCheck float64
-	if iters<200 { smCheck = iters } else { smCheck = math.Ceil(iters/math.Ceil(iters/200)) }
-
 	fmt.Println("Starting threads...")
-	for j := 0.0; j<math.Ceil(iters/200); j++{
-		for i := 0.0; i < smCheck; i++ {
-			go processDogs(finished, int(i))
-		}
-		time.Sleep(time.Second)
+	for i := 0.0; i < iters; i++ {
+		go processDogs(finished, int(i)); time.Sleep(5)
 	}
+	fmt.Println("Threads loaded!")
 
-	fmt.Println("All threads online!")
 	<- fullFin
 	fmt.Println(strconv.Itoa(totalDownloaded)+" dogs downloaded! A few might be missing due to API errors.")
 }

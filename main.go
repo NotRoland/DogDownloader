@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/cavaliercoder/grab"
+	jsoniter "github.com/json-iterator/go"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -13,6 +13,7 @@ import (
 
 type DogJSON struct { Message string }
 var totalDownloaded int
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 func downloadFile(url string, filepath string) float64{
 	_, err := grab.Get(filepath, url)
@@ -27,7 +28,7 @@ func processDownload(url string, filepath string, finished chan float64){ finish
 
 func getDogs(finished chan float64, iter int) float64 {
 	resp, err := http.Get("https://dog.ceo/api/breeds/image/random")
-	if err != nil{
+	if err != nil {
 		return 2
 	}
 	bytes, _ := ioutil.ReadAll(resp.Body)

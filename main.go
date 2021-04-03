@@ -9,7 +9,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type DogJSON struct { Message string }
@@ -63,7 +62,7 @@ func main() {
 
 	fmt.Println("Starting threads...")
 	for i := 0.0; i < iters; i++ {
-		go processDogs(finished, int(i)); time.Sleep(5)
+		go processDogs(finished, int(i))
 	}
 	fmt.Println("Threads loaded!")
 

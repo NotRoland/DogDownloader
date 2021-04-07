@@ -78,6 +78,10 @@ func beginFront(){ // Does front-end modifications.
 func main() {
 	window := App.NewWindow("Dog Downloader")
 
+	icon, _ := fyne.LoadResourceFromURLString("https://i.ibb.co/TwWvxKj/icon.jpg")
+	App.SetIcon(icon)
+	window.SetIcon(icon)
+
 	dogNumber.Validator = validation.NewRegexp("^[0-9]+$", "Must be a number.")
 	dogNumber.Text = "100"
 

@@ -28,7 +28,7 @@ var buttonGrid = container.NewGridWithColumns(3)
 
 var gridAvailable = true // Set to false for a [Please wait] to replace the button grid. Set to true to cancel this.
 
-func gridLoop(){
+func gridLoop() {
 	lastGrid := true
 	for true {
 		if gridAvailable != lastGrid {
@@ -52,8 +52,10 @@ func themeChange(dark bool) {
 	}
 }
 
-func speedChange(speed string){
+func speedChange(speed string) {
 	switch speed {
+	case "Slow":
+		waitTime = 250
 	case "Moderate":
 		waitTime = 20
 	case "Fast":
@@ -63,7 +65,7 @@ func speedChange(speed string){
 	}
 }
 
-func beginFront(){ // Does front-end modifications.
+func beginFront() { // Does front-end modifications.
 	err := dogNumber.Validate()
 	if err != nil {
 		setLog("Invalid number of dogs.", "0", "0")
@@ -88,10 +90,10 @@ func main() {
 	themeCheck := widget.NewCheck("Dark Theme", themeChange)
 	themeCheck.Checked = true
 
-	speedWid := widget.NewSelect([]string{"Moderate", "Fast", "Blitz"}, speedChange)
+	speedWid := widget.NewSelect([]string{"Slow", "Moderate", "Fast", "Blitz"}, speedChange)
 	speedWid.Selected = "Fast"
 
-	title := widget.NewLabel("Welcome to the Dog Downloader!")
+	title := widget.NewLabel("Who let the dogs out?")
 	title.TextStyle = fyne.TextStyle{Bold: true, Italic: true}
 	logLabel.TextStyle = fyne.TextStyle{Monospace: true}
 	progressLabel.TextStyle = fyne.TextStyle{Monospace: true}
@@ -105,7 +107,7 @@ func main() {
 			dogNumber,
 			widget.NewLabel("Choose a speed:"),
 			speedWid,
-			),
+		),
 		layout.NewSpacer(),
 		buttonGrid,
 		container.NewHBox(logLabel, layout.NewSpacer(), progressLabel),
